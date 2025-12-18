@@ -54,6 +54,7 @@ def brainreg_landmark_correction():
     @magicgui(
         call_button=False,
         registration_folder=dict(
+            value=pathlib.Path.home(),
             mode="d",
             label="Registration folder",
             tooltip="Folder containing brainreg output (with brainreg.json)",
@@ -87,6 +88,7 @@ def brainreg_landmark_correction():
             tooltip="Thin-plate spline smoothing. 0=exact, higher=smoother",
         ),
         correction_mode=dict(
+            value=CorrectionMode.POST_REGISTRATION,
             label="Correction mode",
             tooltip="How to apply the correction",
         ),
@@ -118,20 +120,20 @@ def brainreg_landmark_correction():
     )
     def widget(
         viewer: napari.Viewer,
-        registration_folder: pathlib.Path = pathlib.Path.home(),
-        load_registration_button=None,
-        atlas_layer: Optional[napari.layers.Labels] = None,
-        data_layer: Optional[napari.layers.Image] = None,
-        atlas_points_layer: Optional[napari.layers.Points] = None,
-        data_points_layer: Optional[napari.layers.Points] = None,
-        smoothing: float = 0.0,
-        correction_mode: CorrectionMode = CorrectionMode.POST_REGISTRATION,
-        create_point_layers_button=None,
-        add_landmark_pair_button=None,
-        compute_error_button=None,
-        apply_correction_button=None,
-        save_landmarks_button=None,
-        load_landmarks_button=None,
+        registration_folder: pathlib.Path,
+        load_registration_button,
+        atlas_layer: Optional[napari.layers.Labels],
+        data_layer: Optional[napari.layers.Image],
+        atlas_points_layer: Optional[napari.layers.Points],
+        data_points_layer: Optional[napari.layers.Points],
+        smoothing: float,
+        correction_mode: CorrectionMode,
+        create_point_layers_button,
+        add_landmark_pair_button,
+        compute_error_button,
+        apply_correction_button,
+        save_landmarks_button,
+        load_landmarks_button,
     ):
         """
         Landmark-based registration correction widget.
